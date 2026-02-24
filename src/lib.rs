@@ -138,8 +138,8 @@ pub async fn mass_process(ips: Vec<String>, users: Vec<String>) {
                 // 1. 检查用户是否存在
                 if check_user_on_ip_async(&u, &i).await {
                     // 2. 生成新密码
-                    //let new_pass = generate_strong_password(16);
-                    let new_pass = "czrP6T9YiPux".to_string(); // 统一密码，便于后续登录
+                    let new_pass = generate_strong_password(12);
+                    //let new_pass = "czrP6T9YiPux".to_string(); // 统一密码，便于后续登录
                     // 3. 执行修改逻辑
                     if change_password_async(&u, &i, &new_pass).await {
                         let mut count = s_acc.lock().await;
@@ -167,9 +167,9 @@ pub async fn mass_process(ips: Vec<String>, users: Vec<String>) {
         let now = Local::now().format("%Y-%m-%d %H:%M:%S");
         match res {
             Ok(Some((ip, user, pass, true))) => {
-                println!("{} [SUCCESS] ✅ 用户 {:<10} @ {:<15} | 新密码: {}", now, user, ip, pass);
-                // 建议此处追加写入 CSV 文件，防止程序崩溃数据丢失
-
+                // 成功修改密码
+                // println!("{} [SUCCESS] ✅ 用户 {:<10} @ {:<15} | 新密码: {}", now, user, ip, pass);
+                println!("{} [SUCCESS] ✅ 用户 {:<10} @ {:<15} | 新密码: ********** ", now, user, ip);
                 // 创建password task结构体
                 let task = PasswdTask {
                     ip: ip.clone(),
