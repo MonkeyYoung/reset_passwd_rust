@@ -1,6 +1,8 @@
 use reset_passwd_async::read_conf;
+
 #[tokio::main]
 async fn main() {
+    
     // 1.读取主机用户和ip列表
     let users = read_conf("users.conf").unwrap();
     let ips = read_conf("ips.conf").unwrap();
